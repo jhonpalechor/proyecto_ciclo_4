@@ -1,5 +1,5 @@
 #login-container{
-    margin-top: 10%;
+    margin-top: 20%;
 }
 
 #login-container h2,
@@ -13,4 +13,9 @@
 }
 #login-container .form-label{
     float: left;
+}
+#login-container .input:hover{
+    color: #fff;
+    background: linear-gradient(to bottom, transparent, #36f);/*enfoque de color semi transparente de un color */
+    outline: none;/*fuera de linea ninguno*/
 }

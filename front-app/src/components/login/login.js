@@ -1,21 +1,54 @@
 import React from 'react';
+import axios from "axios";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
+import { APIHOST as host }from "../app.json";
 import './login.css'
+import { isNull } from "util";
+import Cookies from "universal-cookie";
+import { calculaEspiracionSesion } from "../helper/helper";
+import  Loading from "../loading/loading"
+
+const cookies = new Cookies(); 
 
 export default class login extends React.Component {
     constructor(props) {
         super(props);
         this.state = { 
+            Loading: false,
             usuario:'',
             pass:'',
         };
     }
     iniciarSesion(){
-        alert(`usuario: ${this.state.usuario} contraseña:${this.state.pass}`);
+        this.setState({ Loading: true});
+
+        axios.post(`${host}/usuarios/login`, {
+            usuario: this.state.usuario,
+            pass: this.state.pass
+        })
+        .then((response)=>{
+            if(isNull(response.data.token)){
+                alert("usuario y/o contraseña invalidas");
+                console.log(response);
+            }
+            else{
+                cookies.set('_s', response.data.token, {
+                    path: "/",
+                    expires: calculaEspiracionSesion(),
+                });
+                console.log(response);
+            }
+            this.setState({ Loading: false});
+        })
+        .catch((err) =>{
+            console.log(err);
+            this.setState({ Loading: false});
+        }); 
     }
     render() { 
         return ( 
             <Container id="login-container">
+                <Loading  show={this.state.Loading}/>
                 <Row>
                     <Col>
                     <Row>
@@ -32,7 +65,7 @@ export default class login extends React.Component {
                 <Form>
                     <Form.Group >
                     <Form.Label>Nombre de usuario</Form.Label>
-                    <Form.Control placeholder="Usuario" 
+                    <Form.Control className="input" placeholder="Usuario" 
                     onChange={(e)=>
                         this.setState({usuario: e.target.value})
                     }
@@ -40,7 +73,7 @@ export default class login extends React.Component {
                     </Form.Group>
                     <Form.Group >
                     <Form.Label>Contraseña</Form.Label>
-                    <Form.Control type="password" placeholder="Contraseña"
+                    <Form.Control className="input" type="password" placeholder="Contraseña"
                     onChange={(e)=>
                         this.setState({pass: e.target.value})
                     }
