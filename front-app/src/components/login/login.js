@@ -1,11 +1,11 @@
 import React from 'react';
 import axios from "axios";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
-import { APIHOST as host }from "../app.json";
+import { APIHOST as host } from "../../app.json";
 import './login.css'
 import { isNull } from "util";
 import Cookies from "universal-cookie";
-import { calculaEspiracionSesion } from "../helper/helper";
+import { calcularExpiracionSesion } from "../helper/helper";
 import  Loading from "../loading/loading"
 
 const cookies = new Cookies(); 
@@ -34,9 +34,9 @@ export default class login extends React.Component {
             else{
                 cookies.set('_s', response.data.token, {
                     path: "/",
-                    expires: calculaEspiracionSesion(),
+                    expires: calcularExpiracionSesion(),
                 });
-                console.log(response);
+                this.props.history.push('/empleados');
             }
             this.setState({ Loading: false});
         })

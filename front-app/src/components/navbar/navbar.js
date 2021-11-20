@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Navbar, Nav, Dropdown, DropdownButton, Row } from "react-bootstrap";
 import "./navbar.css";
+//import "../../../public/icono-pagina.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -13,8 +14,9 @@ export default class menu extends React.Component {
         return ( 
             <Navbar fixed="top" id="navbar" bg="primary" variant="dark">
                 <Container>
-                    <Navbar.Brand href="/#home">
-                            <img className="icono" src="./icono-pagina.png" alt=""/>
+                    <Navbar.Brand href="/home">
+                {/* para imagenes con react es mejor manejarlas desde la web con un link ya que demora menos en cargar*/}
+                            <img className="icono" src="https://pamingroup.com/wp-content/uploads/2021/04/fast-food-1851561-1569286.png" alt="Logo"/>
                         Fast Food
                         <span id="usuario-sub-branm">
                         

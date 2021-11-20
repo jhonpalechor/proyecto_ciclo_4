@@ -1,10 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router,
-    Route,
-    Switch,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Login from "../login/login";//ruta del login
 import PrivateRoute from "../auth/privateroute";
+//import ProductosBuscar from '../productos/productos.buscar'; para los productos
+//import EmpleadosBuscar from '../empleados/crud/buscar';
+import Empleados from '../empleados';
 
 export default function AppRouter(){
     return(
@@ -12,6 +12,8 @@ export default function AppRouter(){
             <Switch>
                 <Route exact path={["/","/login"]} component={Login} />
                 <PrivateRoute exact path="/home" component={ Home }/>
+                <PrivateRoute exact path="/empleados" component={ Empleados }/>
+                {/*<PrivateRoute exact path="/productos" component={ ProductosBuscar }/>*/}
                 <Route 
                     path={'*'}
                     component={()=>(
@@ -28,5 +30,7 @@ export default function AppRouter(){
 }
 
 function Home() {
-    return <h2>Bienvenidos a Home</h2>;
+    return(
+        <h2 style={{ marginTop:300 }}>Bienvenidos a Home</h2>
+    ); 
 }

@@ -15,7 +15,7 @@
     float: left;
 }
 #login-container .input:hover{
-    color: #fff;
+    color: #000;
     background: linear-gradient(to bottom, transparent, #36f);/*enfoque de color semi transparente de un color */
     outline: none;/*fuera de linea ninguno*/
 }
