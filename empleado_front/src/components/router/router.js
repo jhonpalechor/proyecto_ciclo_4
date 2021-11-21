@@ -1,32 +1,25 @@
-import React from 'react';
-import { BrowserRouter as Router, 
-    Route, 
-    Switch 
-} from 'react-router-dom';
-
-import Login from "../login/login"
-import privateRoute from "../auth/privateroute";
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Login from "../login/login";
+import PrivateRoute from "../auth/privateroute";
+import Empleados from "../empleados/crud/buscar";
 
 export default function AppRouter() {
     return (
         <Router>
             <Switch>
-                <Route exact path={["/", "/login"]} component={Login} />
-                <privateRoute exact path="/home" component={Home} /> 
-                <Route
-                    path={"*"}
-                    component={() => {
-                        <h2 style={{ marginTop: 200}}>
-                            404 - Not Found
-                            <br />
-                            PAGINA NO ENCONTRADA
-                        </h2>
-                    }}
-                />
+                <Route exact path={ [ "/", "/login" ] } component={ Login } />
+                <PrivateRoute exact path={ [ "/empleados" ] } component={ Empleados } />
+
+                {/* Ruta de página no encontrada (404) */}
+                <Route path={ "*" } component={ () => (
+                    <h1 style={{ marginTop: 300 }}>
+                    404
+                    <br/>
+                    Página no encontrada
+                    </h1>
+                ) } />
             </Switch>
-        </Router>   
-    );
-}
-function Home() {
-    return <h2>BIENVENIDOS A HOME</h2>;
+        </Router>
+    )
 }
