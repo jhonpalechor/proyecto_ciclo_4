@@ -7,7 +7,7 @@ import AppRouter from "./components/router/router";
 function App() {
   return (
     <div className="App">
-      <Container>
+      <Container className="main-container">
         <Menu />
         <AppRouter />
       </Container>

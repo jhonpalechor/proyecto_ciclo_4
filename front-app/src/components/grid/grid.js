@@ -1,12 +1,15 @@
 import React from "react";
-//import "./empleados.css";
-import { request } from "../helper/helper";
-import { Row, Col } from "react-bootstrap";
+import "../empleados/empleados.css";
+import { Row, Col, Button } from "react-bootstrap";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider, 
     PaginationListStandalone, SizePerPageDropdownStandalone } from 'react-bootstrap-table2-paginator';
-
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
+import { request } from "../helper/helper";
+import Loading from "../loading/loading";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { isUndefined } from "util";
 
 const { SearchBar } = Search;
 
@@ -14,22 +17,46 @@ export default class DataGrid extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            Loading: false,
             rows: [],
-        }
+        };
+        if(this.props.showEditButton && !this.existsColumn("Editar")){
+            this.props.columns.push(this.getEditButton());
+        } 
     }
     componentDidMount(){
         this.getData();
     }
     getData(){
+        this.setState({ loading:false });
         request
         .get(this.props.url)
         .then((response)=>{
-            console.log(response.data);
-            this.setState({ rows: response.data });
+            this.setState({ 
+                rows: response.data, 
+                Loading:false,
+            });
         })
         .catch((err)=>{
             console.error(err);
+            this.setState({ loading:false });
         });
+    }
+    existsColumn(colText){
+        let col = this.props.columns.find((column)=> column.text === colText);
+        return !isUndefined(col);
+    }
+    getEditButton(){
+        return {
+            text:"Editar",
+            formatter: (cell, row)=>{
+                return(
+                    <Button onClick={()=> this.props.onClickEditButton(row)}>
+                        <FontAwesomeIcon icon={faEdit}/>
+                    </Button>
+                );
+            },
+        };
     }
     render() { 
         const options = {
@@ -37,6 +64,8 @@ export default class DataGrid extends React.Component {
             totalSize: this.state.rows.length
             };
         return (
+            <>
+            <Loading show={ this.state.Loading }/>
             <ToolkitProvider
                     keyField="tp"
                     data={ this.state.rows }
@@ -80,6 +109,7 @@ export default class DataGrid extends React.Component {
                         )
                     }
                     </ToolkitProvider>
+                </>
         );
     }
 }

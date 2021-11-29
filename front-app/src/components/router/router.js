@@ -5,6 +5,7 @@ import PrivateRoute from "../auth/privateroute";
 //import ProductosBuscar from '../productos/productos.buscar'; para los productos
 //import EmpleadosBuscar from '../empleados/crud/buscar';
 import Empleados from '../empleados';
+import Home from '../Home/Home';
 
 export default function AppRouter(){
     return(
@@ -29,8 +30,8 @@ export default function AppRouter(){
     );
 }
 
-function Home() {
+/*function Home() {
     return(
         <h2 style={{ marginTop:300 }}>Bienvenidos a Home</h2>
     ); 
-}
+} */

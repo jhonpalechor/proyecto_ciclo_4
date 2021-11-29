@@ -1,3 +1,6 @@
+#navbar{
+    font-family:fantasy , sans-serif;
+}
 #navbar .dropdown-header .row:nth-child(1){
     font-size: 80px;
     display: flex;
