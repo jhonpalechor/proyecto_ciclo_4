@@ -57,7 +57,7 @@ exports.update= function(req,res){
             return;
         }
         response.exito=true,
-        response.msg="los datos se han actualizado",
+        response.msg="Los datos se han actualizado exitosamente",
         res.json(response)
     })
 }

@@ -50,6 +50,7 @@ export default class EmpleadosCrear extends React.Component {
                         show:true,
                     },
                 });
+                this.reloadPage();
             }
             this.setState({ loading:false });
         })
@@ -63,6 +64,12 @@ export default class EmpleadosCrear extends React.Component {
         if(this.state.rediret){
             this.props.changeTab("Buscar");
         }
+    }
+
+    reloadPage(){
+        setTimeout(()=>{
+            window.location.reload();
+        }, 2500);
     }
 
     render() { 

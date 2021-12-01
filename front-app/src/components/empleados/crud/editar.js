@@ -18,8 +18,8 @@ export default class EmpleadosEditar extends React.Component {
                 show: false,
             },
             confirmation:{
-                title:"",
-                text:"",
+                title:"Modificar empleados",
+                text:"¿Esta seguro de guardar los cambios?",
                 show: false,
             },
             Loading:false,
@@ -73,7 +73,15 @@ export default class EmpleadosEditar extends React.Component {
         .put(`/empleados/${this.state.idEmpleado}`, this.state.empleado)
         .then((response)=>{
             if(response.data.exito){
-                this.props.changeTab("Buscar");
+                this.setState({
+                    rediret: response.data.exito,
+                    message:{
+                        text: response.data.msg,
+                        show:true,
+                    },
+                });
+                this.reloadPage();
+                //this.props.changeTab("Buscar");
             }
             this.setState({ loading:false });
         })
@@ -90,11 +98,30 @@ export default class EmpleadosEditar extends React.Component {
     }
 
     onCancel(){
-        alert("cancelar");
+        this.setState({
+            confirmation:{
+                ...this.state.confirmation,
+                show: false,
+            },
+        });
     }
 
     onConfirm(){
-        alert("confirmar");
+        this.setState(
+        {
+            confirmation:{
+                ...this.state.confirmation,
+                show: false,
+            },
+        },
+        this.guardarEmpleados()
+        );
+    }
+
+    reloadPage(){
+        setTimeout(()=>{
+            window.location.reload();
+        }, 2500);
     }
 
     render() { 
